@@ -3,7 +3,9 @@ from constants import *
 from player import Player
 from asteroidfield import AsteroidField
 from asteroid  import Asteroid
-from logger import log_state
+from logger import log_state, log_event
+from circleshape import CircleShape
+import sys
 
 def main():
     print("Starting Asteroids!")
@@ -28,6 +30,11 @@ def main():
                 return
         screen.fill((0, 0, 0))
         updatable.update(dt)
+        for asteroid in asteroids:
+            if player.collision(asteroid):
+                log_event("player_hit")
+                print("Game over!")
+                sys.exit()
         for sprite in drawable:
             sprite.draw(screen)
         log_state()
